@@ -1,10 +1,10 @@
-package com.example.mobileappclient.RoomDB.Local
+package com.example.mobileappclient.RoomDB
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.example.mobileappclient.RoomDB.DatabaseConverter
+import com.example.mobileappclient.RoomDB.Local.Hero
+import com.example.mobileappclient.RoomDB.Local.HeroDao
 import com.example.mobileappclient.RoomDB.Remote.HeroRemoteKey
 import com.example.mobileappclient.RoomDB.Remote.HeroRemoteKeyDao
 
