@@ -1,0 +1,30 @@
+package com.example.mobileappclient.DI
+
+import android.content.Context
+import androidx.room.Room
+import com.example.mobileappclient.RoomDB.HeroDatabase
+import com.example.mobileappclient.utils.Constants.HERO_DATABASE
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+
+    @Provides
+    @Singleton
+    fun provideDatabase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context,
+        HeroDatabase::class.java,
+        HERO_DATABASE,
+    ).build()
+
+
+}
