@@ -10,6 +10,10 @@ object Constants {
     const val HERO_DATABASE = "hero_database"
 
     const val ON_BOARDING_PAGE_COUNT = 3
+    const val LAST_ONBOARDING_PAGE = 2
 
+    const val PREFERENCES_NAME = "hero_preferences"
+
+    const val PREFERENCES_KEY = "on_boarding_completed"
 
 }
