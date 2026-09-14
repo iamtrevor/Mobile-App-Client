@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MobileAppClientTheme {
+            MobileAppClientTheme(dynamicColor = false) {
 
                 navController = rememberNavController()
                 SetupNavGraph(navController = navController)

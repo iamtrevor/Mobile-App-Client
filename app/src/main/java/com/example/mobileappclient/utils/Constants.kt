@@ -9,5 +9,7 @@ object Constants {
 
     const val HERO_DATABASE = "hero_database"
 
+    const val ON_BOARDING_PAGE_COUNT = 3
+
 
 }
