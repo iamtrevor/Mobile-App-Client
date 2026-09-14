@@ -1,4 +1,4 @@
-package com.example.mobileappclient.RoomDB
+package com.example.mobileappclient.Data
 
 import androidx.room.TypeConverter
 

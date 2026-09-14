@@ -1,4 +1,4 @@
-package com.example.mobileappclient.RoomDB.Local
+package com.example.mobileappclient.Data.RoomBD.Local
 
 import androidx.paging.PagingSource
 import androidx.room.Dao

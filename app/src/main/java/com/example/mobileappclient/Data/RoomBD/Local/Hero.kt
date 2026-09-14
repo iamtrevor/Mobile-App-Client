@@ -1,4 +1,4 @@
-package com.example.mobileappclient.RoomDB.Local
+package com.example.mobileappclient.Data.RoomBD.Local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

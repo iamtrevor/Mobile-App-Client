@@ -2,7 +2,7 @@ package com.example.mobileappclient.DI
 
 import android.content.Context
 import androidx.room.Room
-import com.example.mobileappclient.RoomDB.HeroDatabase
+import com.example.mobileappclient.Data.HeroDatabase
 import com.example.mobileappclient.utils.Constants.HERO_DATABASE
 import dagger.Module
 import dagger.Provides

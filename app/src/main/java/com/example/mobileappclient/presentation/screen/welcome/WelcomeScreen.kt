@@ -34,6 +34,7 @@ import com.example.mobileappclient.ui.theme.descriptionColor
 import com.example.mobileappclient.ui.theme.isInactiveIndicatorColor
 import com.example.mobileappclient.ui.theme.titleColor
 import com.example.mobileappclient.ui.theme.welcomeScreenBackGroundColor
+import com.example.mobileappclient.utils.Constants.LAST_ONBOARDING_PAGE
 import com.example.mobileappclient.utils.Constants.ON_BOARDING_PAGE_COUNT
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -138,7 +139,7 @@ fun FinishButton(
 
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
-            visible = pagerState.currentPage == 2
+            visible = pagerState.currentPage == LAST_ONBOARDING_PAGE
         ) {
             Button(
                 onClick = onClick,
