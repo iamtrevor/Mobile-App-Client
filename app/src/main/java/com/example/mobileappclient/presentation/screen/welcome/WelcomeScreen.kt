@@ -22,7 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.mobileappclient.navigation.Screen
 import com.example.mobileappclient.presentation.screen.OnBoardingPage
 import com.example.mobileappclient.ui.theme.EXTRA_LARGE_PADDING
 import com.example.mobileappclient.ui.theme.PAGING_INDICATOR_SPACING
@@ -44,7 +46,9 @@ import java.nio.file.WatchEvent
 
 
 @Composable
-fun WelcomeScreen(navController: NavHostController) {
+fun WelcomeScreen(
+    welcomeViewModel: WelcomeViewModel = hiltViewModel(),
+    navController: NavHostController) {
 
     val pagerState = rememberPagerState()
 
@@ -80,7 +84,12 @@ fun WelcomeScreen(navController: NavHostController) {
 
         FinishButton(
             modifier = Modifier.weight(1f),
-            pagerState = pagerState){}
+            pagerState = pagerState){
+
+            navController.popBackStack()
+            navController.navigate(Screen.Home.route)
+            welcomeViewModel.saveOnBoardingState(completed = true)
+        }
 
     }
 

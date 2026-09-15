@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.mobileappclient.presentation.screen.home.HomeScreen
 import com.example.mobileappclient.presentation.screen.splash.SplashScreen
 import com.example.mobileappclient.presentation.screen.welcome.WelcomeScreen
 import com.example.mobileappclient.utils.Constants.DETAILS_ARGUMENTS_KEY
@@ -15,7 +16,7 @@ import com.example.mobileappclient.utils.Constants.DETAILS_ARGUMENTS_KEY
 fun SetupNavGraph(navController: NavHostController){
     NavHost(
         navController = navController,
-        startDestination = Screen.Welcome.route
+        startDestination = Screen.Splash.route
     ){
 
         composable(route = Screen.Splash.route) {
@@ -28,7 +29,7 @@ fun SetupNavGraph(navController: NavHostController){
 
 
         composable(route = Screen.Home.route) {
-
+            HomeScreen()
         }
 
 

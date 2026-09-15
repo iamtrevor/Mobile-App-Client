@@ -2,7 +2,11 @@ package com.example.mobileappclient.DI
 
 import android.content.Context
 import com.example.mobileappclient.Data.Pref.DataStoreOperationsImpl
+import com.example.mobileappclient.Data.Pref.Repository
 import com.example.mobileappclient.repository.DataStoreOperations
+import com.example.mobileappclient.use_cases.UseCases
+import com.example.mobileappclient.use_cases.read_onboarding.ReadOnBoardingUseCase
+import com.example.mobileappclient.use_cases.save_onboarding.SaveOnBoardingUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +25,17 @@ object RepositoryModule {
         @ApplicationContext context: Context
     ) : DataStoreOperations {
         return DataStoreOperationsImpl(context = context)
+    }
+
+
+    //used to provide the  [ repository ] to both the use cases
+    @Provides
+    @Singleton
+    fun provideUseCases(repository: Repository) : UseCases {
+        return UseCases(
+            saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
+            readOnBoardingUseCase = ReadOnBoardingUseCase(repository)
+        )
     }
 
 }
