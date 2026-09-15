@@ -3,7 +3,9 @@ package com.example.mobileappclient.Data.RoomBD.Local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mobileappclient.utils.Constants
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity(Constants.HERO_DATABASE_TABLE)
 data class Hero(
 
