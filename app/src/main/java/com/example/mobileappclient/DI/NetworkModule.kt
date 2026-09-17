@@ -1,6 +1,10 @@
 package com.example.mobileappclient.DI
 
+import androidx.paging.ExperimentalPagingApi
+import com.example.mobileappclient.Data.HeroDatabase
+import com.example.mobileappclient.Data.Repository.RemoteDataSourceImpl
 import com.example.mobileappclient.Data.RoomBD.Remote.HeroApi
+import com.example.mobileappclient.repository.RemoteDataSource
 import com.example.mobileappclient.utils.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -16,6 +20,7 @@ import javax.inject.Singleton
 
 
 //Module tell hilt how to provide retrofit instance
+@OptIn(ExperimentalPagingApi::class)
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -49,4 +54,20 @@ object NetworkModule {
     fun provideHeroApi(retrofit: Retrofit) : HeroApi {
         return retrofit.create(HeroApi::class.java)
     }
+
+
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataSource(
+        heroApi: HeroApi,
+        heroDatabase: HeroDatabase
+    ) : RemoteDataSource {
+        return RemoteDataSourceImpl(
+            heroApi = heroApi,
+            heroDatabase = heroDatabase
+        )
+    }
+
+
 }

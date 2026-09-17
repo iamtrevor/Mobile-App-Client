@@ -1,6 +1,6 @@
 package com.example.mobileappclient.use_cases.read_onboarding
 
-import com.example.mobileappclient.Data.Pref.Repository
+import com.example.mobileappclient.Data.Repository.Repository
 import kotlinx.coroutines.flow.Flow
 
 class ReadOnBoardingUseCase(

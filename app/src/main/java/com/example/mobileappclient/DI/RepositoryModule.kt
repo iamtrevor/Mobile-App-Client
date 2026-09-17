@@ -1,8 +1,8 @@
 package com.example.mobileappclient.DI
 
 import android.content.Context
-import com.example.mobileappclient.Data.Pref.DataStoreOperationsImpl
-import com.example.mobileappclient.Data.Pref.Repository
+import com.example.mobileappclient.Data.Repository.DataStoreOperationsImpl
+import com.example.mobileappclient.Data.Repository.Repository
 import com.example.mobileappclient.repository.DataStoreOperations
 import com.example.mobileappclient.use_cases.UseCases
 import com.example.mobileappclient.use_cases.read_onboarding.ReadOnBoardingUseCase

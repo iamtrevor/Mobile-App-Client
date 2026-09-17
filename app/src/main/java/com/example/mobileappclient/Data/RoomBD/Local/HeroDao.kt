@@ -11,7 +11,7 @@ interface HeroDao {
 
     //PagingSource is the base class for async loading of data
     @Query("SELECT * FROM hero_table ORDER BY id ASC")
-    fun getAllHero() : PagingSource<Int, Hero>
+    fun getAllHeroes() : PagingSource<Int, Hero>
 
     @Query("SELECT * FROM hero_table WHERE id=:heroId")
     fun getSelectedHero(heroId : Int) : Hero

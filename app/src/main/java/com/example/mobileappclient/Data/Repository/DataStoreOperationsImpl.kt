@@ -1,4 +1,4 @@
-package com.example.mobileappclient.Data.Pref
+package com.example.mobileappclient.Data.Repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore

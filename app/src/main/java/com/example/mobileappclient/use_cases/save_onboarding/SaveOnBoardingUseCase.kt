@@ -1,6 +1,6 @@
 package com.example.mobileappclient.use_cases.save_onboarding
 
-import com.example.mobileappclient.Data.Pref.Repository
+import com.example.mobileappclient.Data.Repository.Repository
 
 class SaveOnBoardingUseCase(
     private val repository: Repository
