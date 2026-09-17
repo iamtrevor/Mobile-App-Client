@@ -6,6 +6,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 
 //Module tell hilt how to provide retrofit instance
 @Module
-@InstallIn(Singleton::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
 
@@ -48,5 +49,4 @@ object NetworkModule {
     fun provideHeroApi(retrofit: Retrofit) : HeroApi {
         return retrofit.create(HeroApi::class.java)
     }
-
 }

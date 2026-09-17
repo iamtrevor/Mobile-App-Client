@@ -10,13 +10,13 @@ import androidx.room.Query
 interface HeroRemoteKeyDao {
 
 
-    @Query("SELECT * FROM hero_remote_key_table WHERE id=:id")
-    suspend fun getRemoteKey(id : Int) : HeroRemoteKey?
+    @Query("SELECT * FROM hero_remote_keys_table WHERE id=:id")
+    suspend fun getRemoteKey(heroId : Int) : HeroRemoteKeys?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addAllRemoteKey(heroRemoteKeys: List<HeroRemoteKey>)
+    suspend fun addAllRemoteKey(heroRemoteKeys: List<HeroRemoteKeys>)
 
-    @Query("DELETE FROM hero_remote_key_table")
+    @Query("DELETE FROM hero_remote_keys_table")
     suspend fun deleteAllRemoteKeys()
 
 }
