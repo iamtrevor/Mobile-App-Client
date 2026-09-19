@@ -6,13 +6,16 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.mobileappclient.presentation.common.ListContent
 import com.example.mobileappclient.presentation.components.RatingWidget
 import com.example.mobileappclient.ui.theme.LARGE_PADDING
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
+    navController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ){
 
@@ -22,9 +25,13 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             HomeTopBar(onSearchedClicked = {})
+        },
+        content = {
+            ListContent(
+                heroes = allHeroes,
+                navController = navController
+            )
         }
-    ){
-        RatingWidget(modifier = Modifier.padding(all = LARGE_PADDING), rating = 4.0)
-    }
+    )
 
 }
