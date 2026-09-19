@@ -1,21 +1,25 @@
 package com.example.mobileappclient.presentation.common
 
+
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,14 +42,33 @@ import com.example.mobileappclient.ui.theme.MEDIUM_PADDING
 import com.example.mobileappclient.ui.theme.SMALL_PADDING
 import com.example.mobileappclient.utils.Constants.BASE_URL
 import com.example.mobileappclient.ui.theme.topAppBarContentColor
-import java.nio.file.WatchEvent
-import kotlin.math.max
+
+
 
 @Composable
 fun ListContent(
     heroes : LazyPagingItems<Hero>,
     navController: NavHostController
 ){
+
+
+
+    LazyColumn(
+        contentPadding = PaddingValues(all = SMALL_PADDING),
+        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+    ) {
+        items(
+            count = heroes.itemCount,
+            key = { index ->
+                heroes[index]?.id ?: index
+            }
+        ) { index ->
+            val hero = heroes[index]
+            hero?.let {
+                HeroItem(hero = it, navController = navController)
+            }
+        }
+    }
 
 }
 
@@ -68,7 +91,7 @@ fun HeroItem(
         contentAlignment = Alignment.BottomStart
     ){
 
-        Surface(shape = MaterialTheme.shapes.large) {
+        Surface(shape = RoundedCornerShape(size = LARGE_PADDING)) {
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = painter,
