@@ -10,7 +10,7 @@ import androidx.room.Query
 interface HeroRemoteKeyDao {
 
 
-    @Query("SELECT * FROM hero_remote_keys_table WHERE id=:id")
+    @Query("SELECT * FROM hero_remote_keys_table WHERE id=:heroId")
     suspend fun getRemoteKey(heroId : Int) : HeroRemoteKeys?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

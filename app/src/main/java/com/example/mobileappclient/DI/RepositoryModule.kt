@@ -5,6 +5,7 @@ import com.example.mobileappclient.Data.Repository.DataStoreOperationsImpl
 import com.example.mobileappclient.Data.Repository.Repository
 import com.example.mobileappclient.repository.DataStoreOperations
 import com.example.mobileappclient.use_cases.UseCases
+import com.example.mobileappclient.use_cases.get_all_heroes.GetAllHeroesUseCase
 import com.example.mobileappclient.use_cases.read_onboarding.ReadOnBoardingUseCase
 import com.example.mobileappclient.use_cases.save_onboarding.SaveOnBoardingUseCase
 import dagger.Module
@@ -34,7 +35,8 @@ object RepositoryModule {
     fun provideUseCases(repository: Repository) : UseCases {
         return UseCases(
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
-            readOnBoardingUseCase = ReadOnBoardingUseCase(repository)
+            readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository)
         )
     }
 
