@@ -56,12 +56,12 @@ class HeroRemoteMediator @Inject constructor(
 
             val response = heroApi.getAllHeroes(page = page)
 
-            if(response.heroes.isNotEmpty()) {
-                heroDatabase.withTransaction {  //allow multiple transactions in the database
-                    if(loadType == LoadType.REFRESH){
-                        heroDao.deleteAllHeroes()
-                        heroRemoteKeyDao.deleteAllRemoteKeys()
-                    }
+            heroDatabase.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    heroDao.deleteAllHeroes()
+                    heroRemoteKeyDao.deleteAllRemoteKeys()
+                }
+                if (response.heroes.isNotEmpty()) {
                     val prevPage = response.prevPage
                     val nextPage = response.nextPage
 

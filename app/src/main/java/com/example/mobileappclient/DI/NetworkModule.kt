@@ -14,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -30,6 +31,9 @@ object NetworkModule {
     @Singleton
     fun provideHttpClient() : OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .readTimeout(15, TimeUnit.SECONDS) //This is the maximum time the app will wait to establish a connection to the server.
             .connectTimeout(15, TimeUnit.SECONDS) //This is the maximum time the app will wait for a response after the connection has been established.
             .build()
@@ -41,10 +45,15 @@ object NetworkModule {
 
         val contentType = "application/json".toMediaType()
 
+        val jsonConfig = Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        }
+
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(jsonConfig.asConverterFactory(contentType))
             .build()
     }
 

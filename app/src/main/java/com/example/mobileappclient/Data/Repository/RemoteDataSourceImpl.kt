@@ -11,6 +11,7 @@ import com.example.mobileappclient.Data.paging_source.HeroRemoteMediator
 import com.example.mobileappclient.repository.RemoteDataSource
 import com.example.mobileappclient.utils.Constants.ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 @ExperimentalPagingApi
 class RemoteDataSourceImpl(
@@ -36,7 +37,7 @@ class RemoteDataSourceImpl(
     }
 
     override fun searchHeroes(): Flow<PagingData<Hero>> {
-        TODO("Not yet implemented")
+        return flowOf(PagingData.empty())
     }
 
 
