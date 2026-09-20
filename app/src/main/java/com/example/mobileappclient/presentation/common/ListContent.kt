@@ -2,7 +2,9 @@ package com.example.mobileappclient.presentation.common
 
 
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,12 +32,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.rememberImagePainter
 import com.example.mobileappclient.Data.RoomBD.Local.Hero
 import com.example.mobileappclient.R
 import com.example.mobileappclient.navigation.Screen
 import com.example.mobileappclient.presentation.components.RatingWidget
+import com.example.mobileappclient.presentation.components.ShimmerEffect
 import com.example.mobileappclient.ui.theme.HERO_ITEM_HEIGHT
 import com.example.mobileappclient.ui.theme.LARGE_PADDING
 import com.example.mobileappclient.ui.theme.MEDIUM_PADDING
@@ -45,32 +49,74 @@ import com.example.mobileappclient.ui.theme.topAppBarContentColor
 
 
 
+
+
+
 @Composable
 fun ListContent(
     heroes : LazyPagingItems<Hero>,
-    navController: NavHostController
+    navController: NavHostController,
+    paddingValues: PaddingValues
 ){
 
+    val result = handlePaginationResult(heroes = heroes, paddingValues = paddingValues)
 
-
-    LazyColumn(
-        contentPadding = PaddingValues(all = SMALL_PADDING),
-        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
-    ) {
-        items(
-            count = heroes.itemCount,
-            key = { index ->
-                heroes[index]?.id ?: index
-            }
-        ) { index ->
-            val hero = heroes[index]
-            hero?.let {
-                HeroItem(hero = it, navController = navController)
+    if (result){
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues),
+            contentPadding = PaddingValues(all = SMALL_PADDING),
+            verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+        ) {
+            items(
+                count = heroes.itemCount,
+                key = { index ->
+                    heroes[index]?.id ?: index
+                }
+            ) { index ->
+                val hero = heroes[index]
+                hero?.let {
+                    HeroItem(hero = it, navController = navController)
+                }
             }
         }
     }
-
 }
+
+
+
+@Composable
+fun handlePaginationResult(
+    heroes : LazyPagingItems<Hero>,
+    paddingValues: PaddingValues
+) : Boolean{
+
+    heroes.apply {
+        val error = when {
+            loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+            loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+            loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+            else -> null
+        }
+
+        return when {
+            loadState.refresh is LoadState.Loading -> {
+                Log.d("PAGING", "REFRESH IS LOADING")
+                ShimmerEffect(paddingValues = paddingValues)
+                false
+            }
+
+            error != null -> {
+                Log.e("PAGING", "Paging error", error.error)
+                false
+            }
+
+            else -> true
+
+        }
+    }
+}
+
+
 
 
 @Composable
