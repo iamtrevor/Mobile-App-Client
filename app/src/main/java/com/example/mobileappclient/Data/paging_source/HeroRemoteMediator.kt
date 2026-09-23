@@ -1,6 +1,7 @@
 package com.example.mobileappclient.Data.paging_source
 
 
+import java.util.Locale
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -10,6 +11,8 @@ import com.example.mobileappclient.Data.HeroDatabase
 import com.example.mobileappclient.Data.RoomBD.Local.Hero
 import com.example.mobileappclient.Data.RoomBD.Remote.HeroApi
 import com.example.mobileappclient.Data.RoomBD.Remote.HeroRemoteKeys
+import java.sql.Date
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 
@@ -69,7 +72,8 @@ class HeroRemoteMediator @Inject constructor(
                         HeroRemoteKeys(
                             id = hero.id,
                             prevPage = prevPage,
-                            nextPage = nextPage
+                            nextPage = nextPage,
+                            lastUpdated = response.lastUpdated
                         )
                     }
 
@@ -82,6 +86,23 @@ class HeroRemoteMediator @Inject constructor(
         } catch (e : Exception){
             return MediatorResult.Error(e)
         }
+    }
+
+    override suspend fun initialize(): InitializeAction {
+        val currentTime = System.currentTimeMillis()
+        val lastUpdated = heroRemoteKeyDao.getRemoteKey(heroId = 1)?.lastUpdated ?: 0L
+
+        val cacheTimeout = 1440
+
+        val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
+
+        return if(diffInMinutes.toInt() <= cacheTimeout){
+            InitializeAction.SKIP_INITIAL_REFRESH
+        } else {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
+
+
     }
 
 
@@ -113,6 +134,15 @@ class HeroRemoteMediator @Inject constructor(
             heroRemoteKeyDao.getRemoteKey(heroId = hero.id)
         }
     }
+
+
+    private fun parseMillis(millis : Long): String {
+        val date = Date(millis)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.ROOT)
+        return format.format(date)
+    }
+
+
 
 
 }

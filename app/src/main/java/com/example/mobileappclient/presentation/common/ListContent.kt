@@ -50,8 +50,6 @@ import com.example.mobileappclient.ui.theme.topAppBarContentColor
 
 
 
-
-
 @Composable
 fun ListContent(
     heroes : LazyPagingItems<Hero>,
@@ -84,6 +82,8 @@ fun ListContent(
 
 
 
+
+
 @Composable
 fun handlePaginationResult(
     heroes : LazyPagingItems<Hero>,
@@ -106,7 +106,7 @@ fun handlePaginationResult(
             }
 
             error != null -> {
-                Log.e("PAGING", "Paging error", error.error)
+                EmptyScreen(error = error)
                 false
             }
 
@@ -142,7 +142,8 @@ fun HeroItem(
                 modifier = Modifier.fillMaxSize(),
                 painter = painter,
                 contentDescription = "Hero Image",
-                contentScale = ContentScale.Crop)
+                contentScale = ContentScale.Crop
+            )
         }
 
         Surface(modifier = Modifier
