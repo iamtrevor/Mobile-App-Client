@@ -1,14 +1,15 @@
 package com.example.mobileappclient.presentation.screen.search
 
-import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.mobileappclient.presentation.screen.home.HomeTopBar
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.mobileappclient.presentation.common.ListContent
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SearchScreen(
     navController : NavHostController,
@@ -16,6 +17,7 @@ fun SearchScreen(
 ){
 
     val searchQuery by searchViewModel.searchQuery
+    val heroes = searchViewModel.searchedHeroes.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
@@ -24,11 +26,20 @@ fun SearchScreen(
               onTextChange = {
                   searchViewModel.updateSearchQuery(query = it)
               },
-              onSearchClicked = {},
+              onSearchClicked = {
+                  searchViewModel.searchHeroes(query = it)
+              },
               onCloseClicked = {
                   navController.popBackStack()
               }
             )
+        },
+        content = { paddingValues ->
+            ListContent(
+                heroes = heroes,
+                navController = navController,
+                modifier = Modifier.padding(paddingValues)
+            )
         }
-    ) { }
+    )
 }

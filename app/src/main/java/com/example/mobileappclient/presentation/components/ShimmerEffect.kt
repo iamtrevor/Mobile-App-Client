@@ -46,14 +46,14 @@ import com.example.mobileappclient.ui.theme.ShimmerLightGray
 import com.example.mobileappclient.ui.theme.ShimmerMediumGray
 
 @Composable
-fun ShimmerEffect(paddingValues: PaddingValues) {
+fun ShimmerEffect(modifier: Modifier = Modifier) {
 
     Log.d("SHIMMER", "ShimmerEffect COMPOSED")
 
 
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(paddingValues),
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(all = SMALL_PADDING),
         verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
     ) {

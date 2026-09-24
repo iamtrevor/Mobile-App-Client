@@ -4,13 +4,14 @@ package com.example.mobileappclient.presentation.common
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import java.io.IOException
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -28,11 +29,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import com.example.mobileappclient.Data.RoomBD.Local.Hero
 import com.example.mobileappclient.R
 import com.example.mobileappclient.ui.theme.DarkGray
 import com.example.mobileappclient.ui.theme.LightGray
 import com.example.mobileappclient.ui.theme.NETWORK_ERROR_ICON_HEIGHT
 import com.example.mobileappclient.ui.theme.SMALL_PADDING
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -40,14 +45,21 @@ import java.net.UnknownHostException
 
 
 @Composable
-fun EmptyScreen(error : LoadState.Error){
+fun EmptyScreen(error : LoadState.Error ?= null,
+                heroes : LazyPagingItems<Hero>? = null
+){
 
-    val message by remember(error) {
-        mutableStateOf(parseErrorMessage(error = error.error))
+    var message by remember(error) {
+        mutableStateOf("Find Your Favourite Hero")
     }
 
-    val icon by remember {
-        mutableStateOf(R.drawable.network_error)
+    var icon by remember {
+        mutableStateOf(R.drawable.search_document)
+    }
+
+    if(error != null){
+        message = parseErrorMessage(error = error)
+        icon = R.drawable.network_error
     }
 
     var startAnimation by remember { mutableStateOf(false) }
@@ -63,37 +75,60 @@ fun EmptyScreen(error : LoadState.Error){
         startAnimation = true
     }
 
-    EmptyContent(alphaAnim = alphaAnim, icon = icon, message = message)
+    EmptyContent(
+        alphaAnim = alphaAnim,
+        icon = icon,
+        message = message,
+        heroes = heroes,
+        error = error
+    )
 
 
 }
 
 
 @Composable
-fun EmptyContent(alphaAnim : Float, icon : Int, message: String){
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Icon(
-            modifier = Modifier.size(NETWORK_ERROR_ICON_HEIGHT)
-                .alpha(alpha = alphaAnim),
-            painter = painterResource(id = icon),
-            contentDescription = "Image Icon",
-            tint = if(isSystemInDarkTheme()) LightGray else DarkGray
-        )
+fun EmptyContent(alphaAnim : Float,
+                 icon : Int,
+                 message: String,
+                 heroes : LazyPagingItems<Hero>? = null,
+                 error : LoadState.Error ?= null){
 
-        Text(
-            modifier = Modifier.padding(top = SMALL_PADDING)
-                .alpha(alpha = alphaAnim),
-            text = message,
-            color = if(isSystemInDarkTheme()) LightGray else DarkGray,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium,
-            fontSize = MaterialTheme.typography.subtitle1.fontSize
-        )
+    var isRefreshing by remember { mutableStateOf(false) }
 
+
+
+    SwipeRefresh(
+        swipeEnabled = error != null,
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+        onRefresh = {
+            heroes?.refresh()
+            isRefreshing = false
+        }) {
+        Column(
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                modifier = Modifier.size(NETWORK_ERROR_ICON_HEIGHT)
+                    .alpha(alpha = alphaAnim),
+                painter = painterResource(id = icon),
+                contentDescription = "Image Icon",
+                tint = if(isSystemInDarkTheme()) LightGray else DarkGray
+            )
+
+            Text(
+                modifier = Modifier.padding(top = SMALL_PADDING)
+                    .alpha(alpha = alphaAnim),
+                text = message,
+                color = if(isSystemInDarkTheme()) LightGray else DarkGray,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Medium,
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            )
+
+        }
     }
 }
 
@@ -101,7 +136,7 @@ fun EmptyContent(alphaAnim : Float, icon : Int, message: String){
 
 // Update to take a Throwable and use 'is' checks
 
-fun parseErrorMessage(error: Throwable): String {
+fun parseErrorMessage(error: LoadState.Error): String {
     return when (error) {
         is SocketTimeoutException -> {
             "Server Unavailable"

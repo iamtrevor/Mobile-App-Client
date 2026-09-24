@@ -8,6 +8,7 @@ import com.example.mobileappclient.Data.HeroDatabase
 import com.example.mobileappclient.Data.RoomBD.Local.Hero
 import com.example.mobileappclient.Data.RoomBD.Remote.HeroApi
 import com.example.mobileappclient.Data.paging_source.HeroRemoteMediator
+import com.example.mobileappclient.Data.paging_source.SearchHeroesSource
 import com.example.mobileappclient.repository.RemoteDataSource
 import com.example.mobileappclient.utils.Constants.ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
@@ -36,8 +37,13 @@ class RemoteDataSourceImpl(
         ).flow
     }
 
-    override fun searchHeroes(): Flow<PagingData<Hero>> {
-        return flowOf(PagingData.empty())
+    override fun searchHeroes(query : String): Flow<PagingData<Hero>> {
+        return Pager(
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchHeroesSource(heroApi = heroApi, query = query)
+            }
+        ).flow
     }
 
 

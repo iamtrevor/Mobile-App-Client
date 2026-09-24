@@ -4,7 +4,6 @@ package com.example.mobileappclient.presentation.common
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -52,16 +51,16 @@ import com.example.mobileappclient.ui.theme.topAppBarContentColor
 
 @Composable
 fun ListContent(
-    heroes : LazyPagingItems<Hero>,
+    heroes: LazyPagingItems<Hero>,
     navController: NavHostController,
-    paddingValues: PaddingValues
+    modifier: Modifier = Modifier
 ){
 
-    val result = handlePaginationResult(heroes = heroes, paddingValues = paddingValues)
+    val result = handlePaginationResult(heroes = heroes, modifier = modifier)
 
     if (result){
         LazyColumn(
-            modifier = Modifier.padding(paddingValues),
+            modifier = modifier,
             contentPadding = PaddingValues(all = SMALL_PADDING),
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
         ) {
@@ -87,7 +86,7 @@ fun ListContent(
 @Composable
 fun handlePaginationResult(
     heroes : LazyPagingItems<Hero>,
-    paddingValues: PaddingValues
+    modifier: Modifier = Modifier
 ) : Boolean{
 
     heroes.apply {
@@ -101,12 +100,17 @@ fun handlePaginationResult(
         return when {
             loadState.refresh is LoadState.Loading -> {
                 Log.d("PAGING", "REFRESH IS LOADING")
-                ShimmerEffect(paddingValues = paddingValues)
+                ShimmerEffect(modifier = modifier)
                 false
             }
 
             error != null -> {
-                EmptyScreen(error = error)
+                EmptyScreen(error = error, heroes = heroes)
+                false
+            }
+
+            heroes.itemCount < 1 -> {
+                EmptyScreen()
                 false
             }
 
