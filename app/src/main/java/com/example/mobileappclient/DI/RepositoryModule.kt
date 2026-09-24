@@ -6,6 +6,7 @@ import com.example.mobileappclient.Data.Repository.Repository
 import com.example.mobileappclient.repository.DataStoreOperations
 import com.example.mobileappclient.use_cases.UseCases
 import com.example.mobileappclient.use_cases.get_all_heroes.GetAllHeroesUseCase
+import com.example.mobileappclient.use_cases.get_selected_hero.GetSelectedHeroUseCase
 import com.example.mobileappclient.use_cases.read_onboarding.ReadOnBoardingUseCase
 import com.example.mobileappclient.use_cases.save_onboarding.SaveOnBoardingUseCase
 import com.example.mobileappclient.use_cases.search_heroes.SearchHeroesUseCase
@@ -38,7 +39,8 @@ object RepositoryModule {
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
             readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
             getAllHeroesUseCase = GetAllHeroesUseCase(repository),
-            searchHeroesUseCase = SearchHeroesUseCase(repository)
+            searchHeroesUseCase = SearchHeroesUseCase(repository),
+            getSelectedHeroUseCase = GetSelectedHeroUseCase(repository)
         )
     }
 
