@@ -3,6 +3,8 @@ package com.example.mobileappclient.DI
 import android.content.Context
 import androidx.room.Room
 import com.example.mobileappclient.Data.HeroDatabase
+import com.example.mobileappclient.Data.Repository.LocalDataSourceImpl
+import com.example.mobileappclient.repository.LocalDataSource
 import com.example.mobileappclient.utils.Constants.HERO_DATABASE
 import dagger.Module
 import dagger.Provides
@@ -27,4 +29,18 @@ object DatabaseModule {
             HERO_DATABASE,
         ).build()
     }
+
+
+    @Provides
+    @Singleton
+    fun provideLocalDatabase(
+        database: HeroDatabase
+    ) : LocalDataSource{
+
+        return LocalDataSourceImpl(
+            heroDatabase = database
+        )
+
+    }
+
 }

@@ -46,6 +46,7 @@ dependencies {
     // --------------------------------------------------
 
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.ads.mobile.sdk)
 
     implementation(libs.androidx.compose.material.icons.extended)
 

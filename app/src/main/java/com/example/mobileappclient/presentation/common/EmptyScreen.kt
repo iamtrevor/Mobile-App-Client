@@ -87,6 +87,7 @@ fun EmptyScreen(error : LoadState.Error ?= null,
 }
 
 
+
 @Composable
 fun EmptyContent(alphaAnim : Float,
                  icon : Int,

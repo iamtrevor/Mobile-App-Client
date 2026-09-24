@@ -4,12 +4,14 @@ package com.example.mobileappclient.Data.Repository
 import androidx.paging.PagingData
 import com.example.mobileappclient.Data.RoomBD.Local.Hero
 import com.example.mobileappclient.repository.DataStoreOperations
+import com.example.mobileappclient.repository.LocalDataSource
 import com.example.mobileappclient.repository.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
 class Repository @Inject constructor(
+    private val local : LocalDataSource,
     private val remote : RemoteDataSource,
     private val dataStore : DataStoreOperations //hilt will look in the modules for a fun that has DataStoreOperations as the return type
 ) {
@@ -21,6 +23,10 @@ class Repository @Inject constructor(
 
     fun searchHeroes(query : String) : Flow<PagingData<Hero>> {
         return remote.searchHeroes(query = query)
+    }
+
+    suspend fun getSelectedHero(heroId : Int) : Hero {
+        return local.getSelectedHero(heroId = heroId)
     }
 
 
