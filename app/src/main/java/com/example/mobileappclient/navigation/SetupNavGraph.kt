@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.mobileappclient.details.DetailsScreen
+import com.example.mobileappclient.presentation.screen.details.DetailsScreen
 import com.example.mobileappclient.presentation.screen.home.HomeScreen
 import com.example.mobileappclient.presentation.screen.search.SearchScreen
 import com.example.mobileappclient.presentation.screen.splash.SplashScreen
