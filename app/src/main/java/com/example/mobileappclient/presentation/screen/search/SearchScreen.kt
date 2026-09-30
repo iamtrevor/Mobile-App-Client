@@ -11,6 +11,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mobileappclient.presentation.common.ListContent
 
 
+
+
+
 @Composable
 fun SearchScreen(
     navController : NavHostController,

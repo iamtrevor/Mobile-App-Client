@@ -32,6 +32,7 @@ palette = "1.0.0"
 coroutines = "1.10.2"
 foundationLayout = "1.12.0"
 adsMobileSdk = "1.4.0"
+remoteCreationCore = "1.0.0-alpha20"
 
 
 
@@ -108,6 +109,7 @@ androidx-palette = { group = "androidx.palette", name = "palette-ktx", version.r
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 ads-mobile-sdk = { group = "com.google.android.libraries.ads.mobile.sdk", name = "ads-mobile-sdk", version.ref = "adsMobileSdk" }
+androidx-compose-remote-creation-core = { group = "androidx.compose.remote", name = "remote-creation-core", version.ref = "remoteCreationCore" }
 
 
 
