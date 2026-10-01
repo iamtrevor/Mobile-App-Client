@@ -74,13 +74,17 @@ class SearchWidgetTest {
         val searchWidgetShown = mutableStateOf(true)
 
         composeTestRule.setContent {
-            SearchWidget(
-                text = text.value,
-                onTextChange = {
-                    text.value = it },
-                onCloseClicked = {},
-                onSearchClicked = {}
-            )
+            if(searchWidgetShown.value){
+                SearchWidget(
+                    text = text.value,
+                    onTextChange = {
+                        text.value = it },
+                    onCloseClicked = {
+                        searchWidgetShown.value = false
+                    },
+                    onSearchClicked = {}
+                )
+            }
         }
         composeTestRule.onNodeWithContentDescription("TextField")
             .performTextInput("TreeBees")
@@ -88,10 +92,40 @@ class SearchWidgetTest {
         composeTestRule.onNodeWithContentDescription("CloseIcon")
             .performClick()
 
-        composeTestRule.onNodeWithContentDescription("TextField")
-            .assertTextContains("")
+        composeTestRule.onNodeWithContentDescription("CloseIcon")
+            .performClick()
+
+        composeTestRule.onNodeWithContentDescription("SearchWidget")
+            .assertDoesNotExist()
     }
 
+
+    @SuppressLint("UnrememberedMutableState")
+    @Test
+    fun openSearchWidget_pressCloseButtonOnce_WhenInputIsEmpty_assertClosedState() {
+
+        val text = mutableStateOf("")
+        val searchWidgetShown = mutableStateOf(true)
+
+        composeTestRule.setContent {
+            if(searchWidgetShown.value){
+                SearchWidget(
+                    text = text.value,
+                    onTextChange = {
+                        text.value = it },
+                    onCloseClicked = {
+                        searchWidgetShown.value = false
+                    },
+                    onSearchClicked = {}
+                )
+            }
+        }
+        composeTestRule.onNodeWithContentDescription("CloseIcon")
+            .performClick()
+
+        composeTestRule.onNodeWithContentDescription("SearchWidget")
+            .assertDoesNotExist()
+    }
 
 
 }
