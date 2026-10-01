@@ -18,7 +18,23 @@
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="AnimatedShimmerItemPreview">
+      <SelectionState runConfigName="passZeroPointZeroValue_Assert_FiveEmptyStars()">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="passZeroPointFiveValue_Assert_FiveEmptyStars()">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="passZeroPointFiveValue_Assert_FourEmptyStars_OneHalfFilledStar()">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="passZeroPointSixValue_Assert_FourEmptyStars_and_oneFilledStar()">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="passFourPointFiveValue_Assert_FourEmptyStars_OneHalfFilledStar()">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
