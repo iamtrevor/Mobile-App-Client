@@ -28,6 +28,8 @@ import com.example.mobileappclient.ui.theme.TOP_BAR_HEIGHT
 import com.example.mobileappclient.ui.theme.topAppBarBackgroundColor
 import com.example.mobileappclient.ui.theme.topAppBarContentColor
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 
 
 @Composable
@@ -56,11 +58,18 @@ fun SearchWidget(
     onCloseClicked : () -> Unit
 ){
     Surface(
-        modifier = Modifier.fillMaxWidth().height(TOP_BAR_HEIGHT).statusBarsPadding(),
+        modifier = Modifier.fillMaxWidth().height(TOP_BAR_HEIGHT).semantics{
+            contentDescription = "SearchWidget"
+        }.statusBarsPadding(),
         elevation = AppBarDefaults.TopAppBarElevation,
         color = MaterialTheme.colorScheme.topAppBarBackgroundColor
     ) {
-        TextField(value = text,
+
+        TextField(
+            modifier = Modifier.semantics{
+                contentDescription = "TextField"
+            },
+            value = text,
             onValueChange = {onTextChange(it)},
             placeholder = {
                 Text(
@@ -89,6 +98,9 @@ fun SearchWidget(
 
             trailingIcon = {
                 IconButton(
+                    modifier = Modifier.semantics{
+                        contentDescription = "CloseIcon"
+                    },
                     onClick = {
                         if(text.isNotEmpty()){
                             onTextChange("")
